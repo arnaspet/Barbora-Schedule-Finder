@@ -7,6 +7,9 @@
       <sourceFolder url="file://$MODULE_DIR$/lib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jason" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tesla" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix_html" />
       <excludeFolder url="file://$MODULE_DIR$/cover" />
@@ -15,5 +18,24 @@
       <excludeFolder url="file://$MODULE_DIR$/logs" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="tesla" level="project" />
+    <orderEntry type="library" name="mime" level="project" />
+    <orderEntry type="library" name="ibrowse" level="project" />
+    <orderEntry type="library" name="hackney" level="project" />
+    <orderEntry type="library" name="gun" level="project" />
+    <orderEntry type="library" name="castore" level="project" />
+    <orderEntry type="library" name="mint" level="project" />
+    <orderEntry type="library" name="jason" level="project" />
+    <orderEntry type="library" name="poison" level="project" />
+    <orderEntry type="library" name="exjsx" level="project" />
+    <orderEntry type="library" name="fuse" level="project" />
+    <orderEntry type="library" name="telemetry" level="project" />
+    <orderEntry type="library" name="excoveralls" level="project" />
+    <orderEntry type="library" name="httparrot" level="project" />
+    <orderEntry type="library" name="ex_doc" level="project" />
+    <orderEntry type="library" name="mix_test_watch" level="project" />
+    <orderEntry type="library" name="dialyxir" level="project" />
+    <orderEntry type="library" name="inch_ex" level="project" />
+    <orderEntry type="library" name="earmark" level="project" />
   </component>
 </module>
