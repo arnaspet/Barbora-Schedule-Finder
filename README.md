@@ -18,5 +18,10 @@ EOF
 
 ```
 
+## Run
+```
+mix run --no-halt
+```
+
 ## Notifiers
 Currently there is only `Slack` notifier
