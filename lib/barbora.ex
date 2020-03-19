@@ -1,6 +1,6 @@
 defmodule Barbora do
   use Application
-  @provider Application.fetch_env!(:barbora, :provider)
+  @notifier Application.fetch_env!(:barbora, :notifier)
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
@@ -17,6 +17,6 @@ defmodule Barbora do
     Barbora.Client.client()
     |> Barbora.Client.get_deliveries()
     |> Barbora.Deliveries.filter_available_deliveries()
-    |> @provider.provide()
+    |> @notifier.provide()
   end
 end
