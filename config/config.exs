@@ -7,4 +7,6 @@ config :barbora, Barbora.Scheduler,
 
 config :barbora, :notifier, Barbora.Notifier.Slack
 
-import_config "config_secret.exs"
+unless Mix.env() == :prod do
+  import_config "config_secret.exs"
+end

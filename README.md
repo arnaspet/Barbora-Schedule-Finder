@@ -13,7 +13,8 @@ config :barbora, Barbora.Client,
   password: "password"
 
 config :barbora, Barbora.Provider.Slack,
-  hook_url: "slack_hook"
+  hook_url: "slack_hook",
+  title: "Atsirado barboros pristatymas!"
 EOF
 
 ```
@@ -21,6 +22,12 @@ EOF
 ## Run
 ```
 mix run --no-halt
+```
+
+### Docker run
+```bash
+docker build -t barbora:latest .
+docker run -e BARBORA_EMAIL=email@email.com -e BARBORA_PASSWORD="password" -e SLACK_HOOK_URL= -e SLACK_TITLE="notification!" barbora
 ```
 
 ## Notifiers

@@ -1,9 +1,6 @@
 defmodule Barbora.Client do
   use Tesla
 
-  @email Application.fetch_env!(:barbora, Barbora.Client)[:email]
-  @password Application.fetch_env!(:barbora, Barbora.Client)[:password]
-
   def get_deliveries(client) do
     get!(client, "/api/eshop/v1/cart/deliveries")
   end
@@ -28,8 +25,8 @@ defmodule Barbora.Client do
         client,
         "/api/eshop/v1/user/login",
         %{
-          email: @email,
-          password: @password,
+          email: email(),
+          password: password(),
           rememberMe: true
         }
       )
@@ -39,4 +36,7 @@ defmodule Barbora.Client do
       _, acc -> acc
     end)
   end
+
+  defp email(), do: Application.fetch_env!(:barbora, Barbora.Client)[:email]
+  defp password(), do: Application.fetch_env!(:barbora, Barbora.Client)[:password]
 end
