@@ -6,7 +6,7 @@ defmodule Barbora.Deliveries do
     Enum.flat_map(matrix, fn day -> filter_available_hours(day) end)
   end
 
-  def filter_available_hours(day) do
+  defp filter_available_hours(day) do
     Enum.reduce(day["hours"], [], fn
       day = %{"available" => true}, acc -> [day | acc]
       _, acc -> acc
