@@ -10,6 +10,7 @@ RUN mix local.rebar --force
 
 COPY . .
 RUN mkdir -p /opt/release \
+    && mix deps.get \
     && mix release \
     && mv _build/${MIX_ENV}/rel/barbora /opt/release
 
