@@ -10,10 +10,11 @@ defmodule Barbora.Notifier.Slack do
     }
   ]
 
-  def provide([]), do: :no_timeslots
+  def notify([]), do: :no_timeslots
 
-  def provide(available_timeslots) do
-    blocks = [get_title_block() | @predefined_blocks] ++ (available_timeslots |> format_delivery_times)
+  def notify(available_timeslots) do
+    blocks =
+      [get_title_block() | @predefined_blocks] ++ (available_timeslots |> format_delivery_times)
 
     Tesla.client([Tesla.Middleware.JSON])
     |> Tesla.post!(hook_url(), %{blocks: blocks})

@@ -5,7 +5,8 @@ defmodule Barbora.Client do
     get!(client, "/api/eshop/v1/cart/deliveries")
   end
 
-  def client() do
+  @spec client({String.t(), String.t()}) :: Tesla.Client.t()
+  def client(auth) do
     middleware = [
       {Tesla.Middleware.BaseUrl, "https://www.barbora.lt"},
       Tesla.Middleware.FormUrlencoded,
@@ -16,17 +17,17 @@ defmodule Barbora.Client do
 
     client = Tesla.client(middleware)
 
-    Tesla.client([{Tesla.Middleware.Headers, [{"Cookie", get_login_cookie(client)}]} | middleware])
+    Tesla.client([{Tesla.Middleware.Headers, [{"Cookie", get_login_cookie(client, auth)}]} | middleware])
   end
 
-  defp get_login_cookie(client) do
+  defp get_login_cookie(client, {email, password}) do
     response =
       post!(
         client,
         "/api/eshop/v1/user/login",
         %{
-          email: email(),
-          password: password(),
+          email: email,
+          password: password,
           rememberMe: true
         }
       )
@@ -36,7 +37,4 @@ defmodule Barbora.Client do
       _, acc -> acc
     end)
   end
-
-  defp email(), do: Application.fetch_env!(:barbora, Barbora.Client)[:email]
-  defp password(), do: Application.fetch_env!(:barbora, Barbora.Client)[:password]
 end
