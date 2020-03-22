@@ -14,12 +14,14 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_state_machine" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gettext" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/hackney" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/httpoison" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/idna" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jason" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/libring" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/metrics" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mimerl" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/nadia" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/parse_trans" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/quantum" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ssl_verify_fun" />
@@ -80,5 +82,9 @@
     <orderEntry type="library" name="unicode_util_compat" level="project" />
     <orderEntry type="library" name="parse_trans" level="project" />
     <orderEntry type="library" name="eqc_ex" level="project" />
+    <orderEntry type="library" name="nadia" level="project" />
+    <orderEntry type="library" name="httpoison" level="project" />
+    <orderEntry type="library" name="exvcr" level="project" />
+    <orderEntry type="library" name="mimic" level="project" />
   </component>
 </module>

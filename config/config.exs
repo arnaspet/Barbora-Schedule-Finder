@@ -2,7 +2,7 @@ import Config
 
 config :barbora, Barbora.Scheduler,
   jobs: [
-    {"* * * * *", {Barbora, :check_deliveries, []}}
+    #    {"* * * * *", {Barbora, :check_deliveries, []}}
   ]
 
 config :barbora, :notifier, Barbora.Notifier.Slack

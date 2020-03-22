@@ -15,7 +15,7 @@ defmodule Barbora.MixProject do
   def application do
     [
       mod: {Barbora, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :nadia]
     ]
   end
 
@@ -25,7 +25,8 @@ defmodule Barbora.MixProject do
       {:tesla, "~> 1.3"},
       {:jason, "~> 1.2"},
       {:quantum, "~> 2.4"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:nadia, "~> 0.6.0"}
     ]
   end
 end
