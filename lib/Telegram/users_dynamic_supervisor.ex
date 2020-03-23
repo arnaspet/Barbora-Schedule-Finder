@@ -1,6 +1,5 @@
 defmodule Barbora.Telegram.UsersDynamicSupervisor do
   use DynamicSupervisor
-  alias :dets, as: Dets
 
   def start_link(init_arg) do
     DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)

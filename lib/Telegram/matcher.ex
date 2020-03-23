@@ -9,7 +9,7 @@ defmodule Barbora.Telegram.Matcher do
   def match(
         %Nadia.Model.Update{
           message: %Nadia.Model.Message{text: "/start", chat: %Nadia.Model.Chat{id: chat_id}}
-        } = update
+        }
       ) do
     Nadia.send_message(chat_id, @greeting)
   end
@@ -20,12 +20,12 @@ defmodule Barbora.Telegram.Matcher do
             text: "/auth " <> text,
             chat: %Nadia.Model.Chat{id: chat_id}
           }
-        } = update
+        }
       ) do
     Logger.debug("matched /auth")
 
     with [email, password] <- String.split(text, " "),
-         {:ok, pid} <- Barbora.Telegram.add_user({chat_id, {email, password}}) do
+         {:ok, _pid} <- Barbora.Telegram.add_user({chat_id, {email, password}}) do
       Logger.info("New user registered #{chat_id}, #{email}")
     else
       err ->
