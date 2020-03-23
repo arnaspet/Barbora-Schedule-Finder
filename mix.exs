@@ -15,7 +15,7 @@ defmodule Barbora.MixProject do
   def application do
     [
       mod: {Barbora, []},
-      extra_applications: [:logger, :nadia]
+      extra_applications: [:logger, :nadia, :logger_file_backend]
     ]
   end
 
@@ -24,7 +24,8 @@ defmodule Barbora.MixProject do
     [
       {:tesla, "~> 1.3"},
       {:jason, "~> 1.2"},
-      {:nadia, "~> 0.6.0"}
+      {:nadia, "~> 0.6.0"},
+      {:logger_file_backend, "~> 0.0.10"},
     ]
   end
 end

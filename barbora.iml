@@ -18,6 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/idna" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jason" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/libring" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/logger_file_backend" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/metrics" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mimerl" />
@@ -86,5 +87,6 @@
     <orderEntry type="library" name="httpoison" level="project" />
     <orderEntry type="library" name="exvcr" level="project" />
     <orderEntry type="library" name="mimic" level="project" />
+    <orderEntry type="library" name="logger_file_backend" level="project" />
   </component>
 </module>
