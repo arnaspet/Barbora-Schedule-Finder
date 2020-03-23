@@ -7,7 +7,6 @@ defmodule Barbora do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Registry, [:unique, :telegram_users]),
       Barbora.Scheduler
     ]
 

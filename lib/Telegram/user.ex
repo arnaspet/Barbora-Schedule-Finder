@@ -10,8 +10,9 @@ defmodule Barbora.Telegram.User do
   defp via_tuple(chat_id), do: {:via, Registry, {:telegram_users, chat_id}}
 
   def init({chat_id, auth}) do
+    Logger.debug("Initiating #{chat_id} user scanner")
     case Barbora.Client.client(auth) do
-      %Tesla.Client{} -> {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth}}
+      %Tesla.Client{} -> {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth}, @scan_interval}
       {:error, _} -> {:stop, :normal}
     end
   end

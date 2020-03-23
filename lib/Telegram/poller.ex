@@ -2,10 +2,8 @@ defmodule Barbora.Telegram.Poller do
   use GenServer
   require Logger
 
-  # Server
-
-  def start_link do
-    Logger.log(:info, "Started poller")
+  def start_link(_) do
+    Logger.debug("Started poller")
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
