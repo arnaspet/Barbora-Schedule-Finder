@@ -4,7 +4,12 @@ defmodule Barbora.Telegram do
 
   def start_user_checkers() do
     dets_command(&Dets.select(&1, [{:"$1", [], [:"$1"]}]))
-    |> Enum.each(&register_to_supervisor/1)
+    |> Enum.each(fn user ->
+      Task.async(fn ->
+        Process.sleep(:rand.uniform(60))
+        register_to_supervisor(user)
+      end)
+    end)
   end
 
   def add_user(user) do
