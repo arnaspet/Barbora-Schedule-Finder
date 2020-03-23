@@ -24,8 +24,7 @@ defmodule Barbora.MixProject do
     [
       {:tesla, "~> 1.3"},
       {:jason, "~> 1.2"},
-      {:nadia, "~> 0.6.0"},
-      {:logger_file_backend, "~> 0.0.10"},
+      {:nadia, "~> 0.6.0"}
     ]
   end
 end

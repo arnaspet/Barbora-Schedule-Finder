@@ -6,32 +6,26 @@ defmodule Barbora.Telegram.Matcher do
     /auth myemail@email.com password
   """
 
-  def match(
-        %Nadia.Model.Update{
-          message: %Nadia.Model.Message{text: "/start", chat: %Nadia.Model.Chat{id: chat_id}}
-        }
-      ) do
+  def match(%Nadia.Model.Update{
+        message: %Nadia.Model.Message{text: "/start", chat: %Nadia.Model.Chat{id: chat_id}}
+      }) do
     Nadia.send_message(chat_id, @greeting)
   end
 
-  def match(
-        %Nadia.Model.Update{
-          message: %Nadia.Model.Message{text: "/stop", chat: %Nadia.Model.Chat{id: chat_id}}
-        }
-      ) do
+  def match(%Nadia.Model.Update{
+        message: %Nadia.Model.Message{text: "/stop", chat: %Nadia.Model.Chat{id: chat_id}}
+      }) do
     Barbora.Telegram.remove_user(chat_id)
     Logger.info("User unsubscribed: #{chat_id}")
     Nadia.send_message(chat_id, "bye bye")
   end
 
-  def match(
-        %Nadia.Model.Update{
-          message: %Nadia.Model.Message{
-            text: "/auth " <> text,
-            chat: %Nadia.Model.Chat{id: chat_id}
-          }
+  def match(%Nadia.Model.Update{
+        message: %Nadia.Model.Message{
+          text: "/auth " <> text,
+          chat: %Nadia.Model.Chat{id: chat_id}
         }
-      ) do
+      }) do
     Logger.debug("matched /auth")
 
     with [email, password] <- String.split(text, " "),
@@ -39,7 +33,9 @@ defmodule Barbora.Telegram.Matcher do
       Nadia.send_message(chat_id, "Great! Ill keep you notified ;)")
       Logger.info("New user registered #{chat_id}, #{email}")
     else
-     {:error, {:already_started, _pid}} -> Nadia.send_message(chat_id, "You are already registered")
+      {:error, {:already_started, _pid}} ->
+        Nadia.send_message(chat_id, "You are already registered")
+
       err ->
         Logger.info("Something went wrong while registering: #{inspect(err)}")
         Nadia.send_message(chat_id, "Something wrong with your provided authorization")

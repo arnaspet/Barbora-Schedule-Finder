@@ -3,24 +3,17 @@ defmodule Barbora.Telegram do
   @users_table :users
 
   def start_user_checkers() do
-    {:ok, table} = Dets.open_file(@users_table, type: :set)
-    users = Dets.select(table, [{:"$1", [], [:"$1"]}])
-    Dets.close(table)
-
-    users |> Enum.each(&register_to_supervisor/1)
+    dets_command(&Dets.select(&1, [{:"$1", [], [:"$1"]}]))
+    |> Enum.each(&register_to_supervisor/1)
   end
 
   def add_user(user) do
-    {:ok, table} = Dets.open_file(@users_table, type: :set)
-    Dets.insert(table, user)
-    Dets.close(table)
+    dets_command(&Dets.insert(&1, user))
     register_to_supervisor(user)
   end
 
   def remove_user(chat_id) do
-    {:ok, table} = Dets.open_file(@users_table, type: :set)
-    Dets.delete(table, chat_id)
-    Dets.close(table)
+    dets_command(&Dets.delete(&1, chat_id))
 
     [{user_pid, _}] = Registry.lookup(:telegram_users, chat_id)
     DynamicSupervisor.terminate_child(Barbora.Telegram.UsersDynamicSupervisor, user_pid)
@@ -31,5 +24,13 @@ defmodule Barbora.Telegram do
       Barbora.Telegram.UsersDynamicSupervisor,
       {Barbora.Telegram.User, user}
     )
+  end
+
+  def dets_command(function) do
+    {:ok, table} = Dets.open_file(@users_table, type: :set)
+    return = function.(table)
+    Dets.close(table)
+
+    return
   end
 end
