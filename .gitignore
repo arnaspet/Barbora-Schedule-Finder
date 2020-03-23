@@ -24,3 +24,4 @@ barbora-*.tar
 
 config/config_secret.exs
 users
+log

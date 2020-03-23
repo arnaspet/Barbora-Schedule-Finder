@@ -16,6 +16,16 @@ defmodule Barbora.Telegram.Matcher do
 
   def match(
         %Nadia.Model.Update{
+          message: %Nadia.Model.Message{text: "/stop", chat: %Nadia.Model.Chat{id: chat_id}}
+        }
+      ) do
+    Barbora.Telegram.remove_user(chat_id)
+    Logger.info("User unsubscribed: #{chat_id}")
+    Nadia.send_message(chat_id, "bye bye")
+  end
+
+  def match(
+        %Nadia.Model.Update{
           message: %Nadia.Model.Message{
             text: "/auth " <> text,
             chat: %Nadia.Model.Chat{id: chat_id}

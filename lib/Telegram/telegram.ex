@@ -17,6 +17,15 @@ defmodule Barbora.Telegram do
     register_to_supervisor(user)
   end
 
+  def remove_user(chat_id) do
+    {:ok, table} = Dets.open_file(@users_table, type: :set)
+    Dets.delete(table, chat_id)
+    Dets.close(table)
+
+    [{user_pid, _}] = Registry.lookup(:telegram_users, chat_id)
+    DynamicSupervisor.terminate_child(Barbora.Telegram.UsersDynamicSupervisor, user_pid)
+  end
+
   defp register_to_supervisor(user) do
     DynamicSupervisor.start_child(
       Barbora.Telegram.UsersDynamicSupervisor,
