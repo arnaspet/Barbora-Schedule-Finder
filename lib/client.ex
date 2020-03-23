@@ -43,7 +43,7 @@ defmodule Barbora.Client do
         {:ok, generate_cookie(headers)}
 
       %Tesla.Env{status: status, body: body} ->
-        Logger.info("Request failed: #{IO.inspect(body)}")
+        Logger.info("Request failed: #{inspect(body)}")
         {:error, status}
     end
   end

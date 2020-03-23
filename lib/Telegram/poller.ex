@@ -65,7 +65,7 @@ defmodule Barbora.Telegram.Poller do
       Barbora.Telegram.Matcher.match(message)
     rescue
       err in MatchError ->
-        Logger.log(:warn, "Errored with #{err} at #{IO.inspect(message)}")
+        Logger.log(:warn, "Errored with #{err} at #{inspect(message)}")
     end
   end
 end

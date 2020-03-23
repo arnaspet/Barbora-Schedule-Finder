@@ -28,8 +28,9 @@ defmodule Barbora.Telegram.Matcher do
          {:ok, _pid} <- Barbora.Telegram.add_user({chat_id, {email, password}}) do
       Logger.info("New user registered #{chat_id}, #{email}")
     else
+     {:error, {:already_started, _pid}} -> Nadia.send_message(chat_id, "You ")
       err ->
-        Logger.info("Something went wrong while registering: #{IO.inspect(err)}")
+        Logger.info("Something went wrong while registering: #{inspect(err)}")
         Nadia.send_message(chat_id, "Something wrong with your provided authorization")
     end
   end
