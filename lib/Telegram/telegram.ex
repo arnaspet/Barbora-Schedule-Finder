@@ -13,8 +13,8 @@ defmodule Barbora.Telegram do
   def add_user(user) do
     {:ok, table} = Dets.open_file(@users_table, type: :set)
     Dets.insert(table, user)
-    register_to_supervisor(user)
     Dets.close(table)
+    register_to_supervisor(user)
   end
 
   defp register_to_supervisor(user) do
