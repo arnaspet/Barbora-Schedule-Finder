@@ -15,7 +15,7 @@ defmodule Barbora.MixProject do
   def application do
     [
       mod: {Barbora, []},
-      extra_applications: [:logger, :nadia, :logger_file_backend]
+      extra_applications: [:logger, :nadia]
     ]
   end
 
