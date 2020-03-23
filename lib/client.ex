@@ -1,5 +1,6 @@
 defmodule Barbora.Client do
   use Tesla
+  require Logger
 
   def get_deliveries(client) do
     get!(client, "/api/eshop/v1/cart/deliveries")
@@ -38,8 +39,12 @@ defmodule Barbora.Client do
              rememberMe: true
            }
          ) do
-      %Tesla.Env{status: 200, headers: headers} -> {:ok, generate_cookie(headers)}
-      %Tesla.Env{status: status} -> {:error, status}
+      %Tesla.Env{status: 200, headers: headers} ->
+        {:ok, generate_cookie(headers)}
+
+      %Tesla.Env{status: status, body: body} ->
+        Logger.info("Request failed: #{IO.inspect(body)}")
+        {:error, status}
     end
   end
 

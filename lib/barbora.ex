@@ -1,23 +1,19 @@
 defmodule Barbora do
   use Application
-  @notifier Application.fetch_env!(:barbora, :notifier)
-  @loginProvider Application.fetch_env!(:barbora, :login_provider)
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      Barbora.Scheduler
+      worker(Registry, [:unique, :telegram_users]),
+      {DynamicSupervisor, strategy: :one_for_one, name: Barbora.Telegram.UsersDynamicSupervisor},
+      {Barbora.Telegram.Poller, []}
     ]
 
-    opts = [strategy: :one_for_one, name: Barbora.Supervisor]
-    Supervisor.start_link(children, opts)
-  end
+    opts = [strategy: :one_for_one, name: Barbora.Telegram.Supervisor]
+    supervisor = Supervisor.start_link(children, opts)
+    Barbora.Telegram.start_user_checkers()
 
-  def check_deliveries() do
-    Barbora.Client.client(@loginProvider.provide())
-    |> Barbora.Client.get_deliveries()
-    |> Barbora.Deliveries.filter_available_deliveries()
-    |> @notifier.notify()
+    supervisor
   end
 end

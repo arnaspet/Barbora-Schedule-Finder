@@ -11,9 +11,13 @@ defmodule Barbora.Telegram.User do
 
   def init({chat_id, auth}) do
     Logger.debug("Initiating #{chat_id} user scanner")
+
     case Barbora.Client.client(auth) do
-      %Tesla.Client{} -> {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth}, @scan_interval}
-      {:error, _} -> {:stop, :normal}
+      %Tesla.Client{} ->
+        {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth}, @scan_interval}
+
+      {:error, _} ->
+        {:stop, :normal}
     end
   end
 
