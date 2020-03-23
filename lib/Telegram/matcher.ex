@@ -51,4 +51,8 @@ defmodule Barbora.Telegram.Matcher do
       }) do
     Nadia.send_message(chat_id, "Sorry, i don't understand what you mean")
   end
+
+  def match(msg) do
+    Logger.info("bad match: #{inspect(msg)}")
+  end
 end
