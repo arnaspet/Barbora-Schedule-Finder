@@ -48,6 +48,8 @@ defmodule Barbora.Telegram.User do
     formatted_slots =
       Enum.reduce(timeslots, "", fn slot, acc -> "#{acc} #{slot["deliveryTime"]}\n" end)
 
+    Logger.debug("New available slots for #{state.chat_id} #{formatted_slots}")
+
     Nadia.send_message(state.chat_id, "New available slots!: #{formatted_slots}")
   end
 end
