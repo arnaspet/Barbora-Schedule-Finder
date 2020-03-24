@@ -6,13 +6,12 @@ defmodule Barbora do
 
     children = [
       worker(Registry, [:unique, :telegram_users]),
-      {DynamicSupervisor, strategy: :one_for_one, name: Barbora.Telegram.UsersDynamicSupervisor},
+      {Barbora.Telegram.UsersDynamicSupervisor, strategy: :one_for_one},
       {Barbora.Telegram.Poller, []}
     ]
 
     opts = [strategy: :one_for_one, name: Barbora.Telegram.Supervisor]
     supervisor = Supervisor.start_link(children, opts)
-    Barbora.Telegram.start_user_checkers()
 
     supervisor
   end

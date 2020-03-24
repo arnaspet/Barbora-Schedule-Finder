@@ -15,7 +15,7 @@ defmodule Barbora.Telegram.Matcher do
   def match(%Nadia.Model.Update{
         message: %Nadia.Model.Message{text: "/stop", chat: %Nadia.Model.Chat{id: chat_id}}
       }) do
-    Barbora.Telegram.remove_user(chat_id)
+    Barbora.Telegram.UsersDynamicSupervisor.remove_user(chat_id)
     Logger.info("User unsubscribed: #{chat_id}")
     Nadia.send_message(chat_id, "bye bye")
   end
@@ -29,7 +29,8 @@ defmodule Barbora.Telegram.Matcher do
     Logger.debug("matched /auth")
 
     with [email, password] <- String.split(text, " "),
-         {:ok, _pid} <- Barbora.Telegram.add_user({chat_id, {email, password}}) do
+         {:ok, _pid} <-
+           Barbora.Telegram.UsersDynamicSupervisor.add_user({chat_id, {email, password}}) do
       Nadia.send_message(chat_id, "Great! Ill keep you notified ;)")
       Logger.info("New user registered #{chat_id}, #{email}")
     else

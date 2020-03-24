@@ -14,7 +14,8 @@ defmodule Barbora.Telegram.User do
 
     case Barbora.Client.client(auth) do
       %Tesla.Client{} = client ->
-        {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth, client: client}, @scan_interval}
+        {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth, client: client},
+         @scan_interval}
 
       {:error, _} ->
         {:stop, :normal}
