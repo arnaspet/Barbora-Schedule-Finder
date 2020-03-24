@@ -13,8 +13,8 @@ defmodule Barbora.Telegram.User do
     Logger.debug("Initiating #{chat_id} user scanner")
 
     case Barbora.Client.client(auth) do
-      %Tesla.Client{} ->
-        {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth}, @scan_interval}
+      %Tesla.Client{} = client ->
+        {:ok, %{chat_id: chat_id, last_scan: Time.utc_now(), auth: auth, client: client}, @scan_interval}
 
       {:error, _} ->
         {:stop, :normal}
@@ -30,9 +30,9 @@ defmodule Barbora.Telegram.User do
 
   def handle_cast({:scan}, state) do
     Logger.debug("Scanning for deliveries for chat: #{state.chat_id}")
+    %Tesla.Env{status: 200} = deliveries = state.client |> Barbora.Client.get_deliveries()
 
-    Barbora.Client.client(state.auth)
-    |> Barbora.Client.get_deliveries()
+    deliveries
     |> Barbora.Deliveries.filter_available_deliveries()
     |> notify(state)
 
