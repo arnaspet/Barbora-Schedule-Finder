@@ -49,7 +49,7 @@ defmodule Barbora.Client do
              headers: [{"Cookie", cookie}]
          ) do
       %Tesla.Env{status: 200, headers: headers} ->
-        {:ok, generate_cookie(headers)}
+        {:ok, generate_cookie([{"set-cookie", "region=barbora.lt"} | headers])}
 
       %Tesla.Env{status: status} = err ->
         Logger.info("Request failed: #{inspect(err)}")
