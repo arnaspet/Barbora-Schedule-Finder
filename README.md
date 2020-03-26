@@ -2,9 +2,6 @@
 Automatic ~~checker~~ telegram bot for barbora timetables. Checks every minute for available timeslots.
 
 ## Installation
-```bash
-mix deps.get
-```
 Just copy and paste this command, open `config/config_secret.exs` and fill with your secret
 ```bash
 cat << EOF > config/config_secret.exs
@@ -16,9 +13,20 @@ EOF
 
 ```
 
+```bash
+mix deps.get
+```
+
 ## Run
 ```
 mix run --no-halt
+```
+
+### Bot commands in telegram
+```
+/start # startup a bot
+/auth login password # starts a user scraper
+/stop # stops user scraper
 ```
 
 ### Docker run
@@ -26,6 +34,3 @@ mix run --no-halt
 docker build -t barbora:latest .
 docker run -e TELEGRAM_TOKEN=telegram_token barbora
 ```
-
-## Notifiers
-Currently there is only `Slack` notifier
