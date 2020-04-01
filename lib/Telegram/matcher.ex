@@ -7,25 +7,26 @@ defmodule Barbora.Telegram.Matcher do
   """
 
   def match(%Nadia.Model.Update{
-        message: %Nadia.Model.Message{text: "/start", chat: %Nadia.Model.Chat{id: chat_id}}
+        message: %Nadia.Model.Message{text: text, chat: %Nadia.Model.Chat{id: chat_id}}
       }) do
+    match_text(text, chat_id)
+  end
+
+  def match(msg) do
+    Logger.info("bad match: #{inspect(msg)}")
+  end
+
+  def match_text("/start", chat_id) do
     Nadia.send_message(chat_id, @greeting)
   end
 
-  def match(%Nadia.Model.Update{
-        message: %Nadia.Model.Message{text: "/stop", chat: %Nadia.Model.Chat{id: chat_id}}
-      }) do
+  def match_text("/stop", chat_id) do
     Barbora.Telegram.UsersDynamicSupervisor.remove_user(chat_id)
     Logger.info("User unsubscribed: #{chat_id}")
     Nadia.send_message(chat_id, "bye bye")
   end
 
-  def match(%Nadia.Model.Update{
-        message: %Nadia.Model.Message{
-          text: "/auth " <> text,
-          chat: %Nadia.Model.Chat{id: chat_id}
-        }
-      }) do
+  def match_text("/auth " <> text, chat_id) do
     Logger.debug("matched /auth")
 
     with [email, password] <- String.split(text, " "),
@@ -43,13 +44,7 @@ defmodule Barbora.Telegram.Matcher do
     end
   end
 
-  def match(%Nadia.Model.Update{
-        message: %Nadia.Model.Message{chat: %Nadia.Model.Chat{id: chat_id}}
-      }) do
+  def match_text(_text, chat_id) do
     Nadia.send_message(chat_id, "Sorry, i don't understand what you mean")
-  end
-
-  def match(msg) do
-    Logger.info("bad match: #{inspect(msg)}")
   end
 end
