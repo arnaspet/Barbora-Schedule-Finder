@@ -29,7 +29,7 @@ defmodule Barbora.Telegram.UsersDynamicSupervisor do
   defp register_to_supervisor(user) do
     DynamicSupervisor.start_child(
       Barbora.Telegram.UsersDynamicSupervisor,
-      {Barbora.Telegram.User, user}
+      {Barbora.Telegram.UserGenServer, user}
     )
   end
 

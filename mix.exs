@@ -7,7 +7,8 @@ defmodule Barbora.MixProject do
       version: "0.1.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -24,7 +25,11 @@ defmodule Barbora.MixProject do
     [
       {:tesla, "~> 1.3"},
       {:jason, "~> 1.2"},
-      {:nadia, "~> 0.6.0"}
+      {:nadia, "~> 0.6.0"},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/resources"]
+  defp elixirc_paths(_), do: ["lib"]
 end

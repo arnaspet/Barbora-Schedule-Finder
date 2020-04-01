@@ -10,6 +10,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/certifi" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/combine" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/crontab" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/dialyxir" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/erlex" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_stage" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_state_machine" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gettext" />
@@ -31,6 +33,19 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/timex" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tzdata" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/unicode_util_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/certifi" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/hackney" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/httpoison" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/idna" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/jason" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/metrics" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/mimerl" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/nadia" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/parse_trans" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/ssl_verify_fun" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/tesla" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/test/lib/unicode_util_compat" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix_html" />
       <excludeFolder url="file://$MODULE_DIR$/cover" />
@@ -88,5 +103,6 @@
     <orderEntry type="library" name="exvcr" level="project" />
     <orderEntry type="library" name="mimic" level="project" />
     <orderEntry type="library" name="logger_file_backend" level="project" />
+    <orderEntry type="library" name="erlex" level="project" />
   </component>
 </module>

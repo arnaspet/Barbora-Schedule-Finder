@@ -11,8 +11,6 @@ defmodule Barbora do
     ]
 
     opts = [strategy: :one_for_one, name: Barbora.Telegram.Supervisor]
-    supervisor = Supervisor.start_link(children, opts)
-
-    supervisor
+    Supervisor.start_link(children, opts)
   end
 end
