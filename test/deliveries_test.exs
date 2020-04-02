@@ -14,7 +14,7 @@ defmodule Barbora.DeliveriesTest do
 
   test "deliveries has deliveryTime key" do
     for delivery <- Barbora.Deliveries.filter_available_deliveries(@few_deliveries) do
-      assert %{"deliveryTime" => deliveryTime} = delivery
+      assert %{"deliveryTime" => _deliveryTime} = delivery
     end
   end
 end

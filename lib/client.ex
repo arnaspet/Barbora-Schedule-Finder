@@ -2,6 +2,13 @@ defmodule Barbora.Client do
   use Tesla
   require Logger
 
+  @headers [
+    # fun fact: this header must be set :D which decodes to: apikey:SecretKey
+    {"Authorization", "Basic YXBpa2V5OlNlY3JldEtleQ=="},
+    {"User-Agent",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36}"}
+  ]
+
   #  plug Tesla.Middleware.Logger
 
   def get_deliveries(client) do
@@ -15,13 +22,7 @@ defmodule Barbora.Client do
       {Tesla.Middleware.BaseUrl, "https://www.barbora.lt"},
       Tesla.Middleware.FormUrlencoded,
       Tesla.Middleware.DecodeJson,
-      # fun fact: this header must be set :D which decodes to: apikey:SecretKey
-      {Tesla.Middleware.Headers,
-       [
-         {"Authorization", "Basic YXBpa2V5OlNlY3JldEtleQ=="},
-         {"User-Agent",
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36}"}
-       ]}
+      {Tesla.Middleware.Headers, @headers}
     ]
 
     client = Tesla.client(middleware)
