@@ -6,7 +6,7 @@ defmodule Barbora.Client do
     # fun fact: this header must be set :D which decodes to: apikey:SecretKey
     {"Authorization", "Basic YXBpa2V5OlNlY3JldEtleQ=="},
     {"User-Agent",
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36}"}
+     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36}"}
   ]
 
   #  plug Tesla.Middleware.Logger
@@ -14,6 +14,25 @@ defmodule Barbora.Client do
   def get_deliveries(client) do
     with %Tesla.Env{status: 200, body: body} <- get!(client, "/api/eshop/v1/cart/deliveries"),
          do: body
+  end
+
+  @spec reserve_delivery(%Tesla.Client{}, {String.t(), String.t()}) ::
+          :ok | {:err, :already_taken} | {:err, :unknown}
+  def reserve_delivery(client, {hourId, dayId}) do
+    with %Tesla.Env{body: %{"deliveries" => _deliveries}} <-
+           post!(client, "/api/eshop/v1/cart/ReserveDeliveryTimeSlot", %{
+             dayId: dayId,
+             hourId: hourId
+           }) do
+      :ok
+    else
+      %Tesla.Env{body: %{"messages" => %{"error" => [%{"Id" => "time_reservation_needed"} | _]}}} ->
+        {:err, :already_taken}
+
+      err ->
+        Logger.error("Reservation request failed #{inspect(err)}")
+        {:err, :unknown}
+    end
   end
 
   @spec client({String.t(), String.t()}) :: Tesla.Client.t() | {:error, integer}

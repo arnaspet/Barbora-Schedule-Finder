@@ -21,11 +21,41 @@ defmodule Barbora.Telegram.UserGenServer do
     end
   end
 
+  @spec reserve(integer(), String.t(), {String.t(), String.t()}) :: :ok
+  def reserve(chat_id, callback_id, reservation),
+    do: GenServer.cast(via_tuple(chat_id), {:reserve, callback_id, reservation})
+
+  @spec scan(integer()) :: :ok
   def scan(chat_id), do: GenServer.cast(via_tuple(chat_id), {:scan})
 
   def handle_info(:timeout, state) do
     scan(state.chat_id)
     {:noreply, state}
+  end
+
+  def handle_cast({:reserve, callback_id, reservation}, state) do
+    timeout =
+      case Barbora.Client.reserve_delivery(state.client, reservation) do
+        :ok ->
+          Barbora.Telegram.User.answer_callback(callback_id, "Reservation successful!")
+          45 * 60 * 1000
+
+        {:err, :already_taken} ->
+          Barbora.Telegram.User.answer_callback(callback_id, "Sorry, this time is already taken")
+          @scan_interval
+
+        {:err, err} ->
+          Logger.error("Error while reserving: #{inspect(err)}")
+
+          Barbora.Telegram.User.answer_callback(
+            callback_id,
+            "Something went wrong with your reservation"
+          )
+
+          @scan_interval
+      end
+
+    {:noreply, state, timeout}
   end
 
   def handle_cast({:scan}, state) do
@@ -34,7 +64,7 @@ defmodule Barbora.Telegram.UserGenServer do
     state.client
     |> Barbora.Client.get_deliveries()
     |> Barbora.Deliveries.filter_available_deliveries()
-    |> Barbora.Telegram.User.notify(state.chat_id)
+    |> Barbora.Telegram.User.notify_timeslots(state.chat_id)
 
     {:noreply, state, @scan_interval}
   end
