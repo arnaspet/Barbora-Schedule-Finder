@@ -61,11 +61,16 @@ defmodule Barbora.Telegram.UserGenServer do
   def handle_cast({:scan}, state) do
     Logger.debug("Scanning for deliveries for chat: #{state.chat_id}")
 
-    state.client
+    response = state.client
     |> Barbora.Client.get_deliveries()
     |> Barbora.Deliveries.filter_available_deliveries()
     |> Barbora.Telegram.User.notify_timeslots(state.chat_id)
 
-    {:noreply, state, @scan_interval}
+    timeout = case response do
+      {:ok, _} -> 5 * @scan_interval
+      _ -> @scan_interval
+    end
+
+    {:noreply, state, timeout}
   end
 end

@@ -57,10 +57,6 @@ defmodule Barbora.Telegram.Matcher do
     end
   end
 
-  def match_text("/reserve " <> reservation, chat_id) do
-    Barbora.Telegram.User.send_message(chat_id, reservation)
-  end
-
   def match_text(_text, chat_id) do
     Barbora.Telegram.User.send_message(chat_id, "Sorry, i don't understand what you mean")
   end
