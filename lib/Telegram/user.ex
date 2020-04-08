@@ -3,6 +3,7 @@ defmodule Barbora.Telegram.User do
 
   def send_message(chat_id, message) do
     Logger.debug("Sending message to #{chat_id}: #{message}")
+    Nadia.send_message(chat_id, message)
   end
 
   def answer_callback(callback_id, message) do
